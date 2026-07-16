@@ -86,8 +86,8 @@ export const editStudent = async (req, res) => {
 export const removeStudent = async (req, res) => {
   try {
     const { id } = req.params;
-
     const deletedStudent = await deleteStudent(id);
+    res.status(200).json(deletedStudent);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
