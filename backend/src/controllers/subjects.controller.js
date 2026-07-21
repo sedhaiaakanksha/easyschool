@@ -10,7 +10,7 @@ export const listSubjects = async (req, res) => {
     const subjects = await getAllSuject();
     res.staus(200).json(subjects);
   } catch (error) {
-    res.staus(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -19,9 +19,9 @@ export const createSubject = async (req, res) => {
     const { id, name, code } = req.body;
 
     const newSubject = await addSubjects(id, name, code);
-    res.stats(201).json(newSubject);
+    res.status(201).json(newSubject);
   } catch (error) {
-    res.stats(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -33,7 +33,7 @@ export const editSubject = async (req, res) => {
     const updatedSubject = await updateSubject(id, name, code);
     res.status(200).json(updatedSubject);
   } catch (error) {
-    res.status(500).json({ error: error.json });
+    res.status(500).json({ error: error.message });
   }
 };
 
