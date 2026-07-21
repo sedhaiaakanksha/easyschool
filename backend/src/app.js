@@ -10,6 +10,8 @@ import feeRecordsRoutes from "./routes/feeRecord.routes";
 import attendanceRecordsRoutes from "./routes/attendanceRecord.routes";
 import schdeuleRoutes from "./routes/schedule.routes";
 import enrollmentRoutes from "./routes/enrollment.routes";
+import examResultRoutes from "./routes/examResult.routes";
+import teacherAttendanceRoutes from "./routes/teacherAttendance.routes";
 
 const app = express();
 
@@ -29,5 +31,7 @@ app.use("/api/feeRecords", feeRecordsRoutes);
 app.use("/api/attendanceRecords", attendanceRecordsRoutes);
 app.use("/api/schedules", schdeuleRoutes);
 app.use("api/enrollments", enrollmentRoutes);
+app.use("/api/examResults", examResultRoutes);
+app.use("/api/teacher-attendance", teacherAttendanceRoutes);
 
 export default app;
