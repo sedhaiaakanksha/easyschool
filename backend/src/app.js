@@ -7,6 +7,7 @@ import classRoutes from "./routes/class.routes";
 import studentRoutes from "./routes/student.routes";
 import subjectRoutes from "./routes/subjects.routes";
 import feeRecordsRoutes from "./routes/feeRecord.routes";
+import attendanceRecordsRoutes from "./routes/attendanceRecord.routes";
 
 const app = express();
 
@@ -23,5 +24,6 @@ app.use("/api/classes", classRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/subjects", subjectRoutes);
 app.use("/api/feeRecords", feeRecordsRoutes);
+app.use("/api/attendanceRecords", attendanceRecordsRoutes);
 
 export default app;
