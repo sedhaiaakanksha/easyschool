@@ -9,6 +9,7 @@ import subjectRoutes from "./routes/subjects.routes";
 import feeRecordsRoutes from "./routes/feeRecord.routes";
 import attendanceRecordsRoutes from "./routes/attendanceRecord.routes";
 import schdeuleRoutes from "./routes/schedule.routes";
+import enrollmentRoutes from "./routes/enrollment.routes";
 
 const app = express();
 
@@ -27,5 +28,6 @@ app.use("/api/subjects", subjectRoutes);
 app.use("/api/feeRecords", feeRecordsRoutes);
 app.use("/api/attendanceRecords", attendanceRecordsRoutes);
 app.use("/api/schedules", schdeuleRoutes);
+app.use("api/enrollments", enrollmentRoutes);
 
 export default app;
