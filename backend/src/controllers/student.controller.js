@@ -66,8 +66,12 @@ export const editStudent = async (req, res) => {
       class_id,
       faculty_id,
       status,
+      password,
     } = req.body;
-
+    let hashedPassword;
+    if (password) {
+      hashedPassword = await bcrypt.hash(password, 10);
+    }
     const updatedStudent = await updateStudent(
       id,
       first_name,
@@ -79,6 +83,7 @@ export const editStudent = async (req, res) => {
       class_id,
       faculty_id,
       status,
+      hashedPassword,
     );
 
     res.status(200).json(updatedStudent);
