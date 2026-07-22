@@ -5,6 +5,8 @@ import {
   deleteStudent,
 } from "../models/student.model";
 
+import bcrypt from "bcryptjs";
+
 export const listStudent = async (req, res) => {
   try {
     const students = await getAllStudents();
@@ -28,8 +30,9 @@ export const createStudent = async (req, res) => {
       class_id,
       faculty_id,
       status,
+      password,
     } = req.body;
-
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newStudent = await addStudent(
       id,
       first_name,
@@ -41,6 +44,7 @@ export const createStudent = async (req, res) => {
       class_id,
       faculty_id,
       status,
+      hashedPassword,
     );
 
     res.status(201).json(newStudent);

@@ -30,7 +30,7 @@ app.use("/api/subjects", subjectRoutes);
 app.use("/api/feeRecords", feeRecordsRoutes);
 app.use("/api/attendanceRecords", attendanceRecordsRoutes);
 app.use("/api/schedules", schdeuleRoutes);
-app.use("api/enrollments", enrollmentRoutes);
+app.use("/api/enrollments", enrollmentRoutes);
 app.use("/api/examResults", examResultRoutes);
 app.use("/api/teacher-attendance", teacherAttendanceRoutes);
 

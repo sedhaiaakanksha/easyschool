@@ -16,7 +16,7 @@ export const listSubjects = async (req, res) => {
 
 export const createSubject = async (req, res) => {
   try {
-    const { id, name, code } = req.body;
+    const { id, name, code, password } = req.body;
 
     const newSubject = await addSubjects(id, name, code);
     res.status(201).json(newSubject);
