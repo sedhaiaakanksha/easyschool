@@ -5,6 +5,8 @@ import {
   deleteTeacher,
 } from "../models/teacher.model";
 
+import bcrypt from "bcryptjs";
+
 export const listTeacher = async (req, res) => {
   try {
     const teachers = await getAllTeachers();
@@ -17,9 +19,17 @@ export const listTeacher = async (req, res) => {
 
 export const addTeacher = async (req, res) => {
   try {
-    const { id, name, email, contact } = req.body;
+    const { id, name, email, contact, password } = req.body;
 
-    const newTeacher = await createTeacher(id, name, email, contact);
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newTeacher = await createTeacher(
+      id,
+      name,
+      email,
+      contact,
+      hashedPassword,
+    );
 
     res.status(201).json(newTeacher);
   } catch (error) {
@@ -30,8 +40,19 @@ export const addTeacher = async (req, res) => {
 export const editTeacher = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, email, contact } = req.body;
-    const updatedTeacher = await updateTeacher(id, name, email, contact);
+    const { name, email, contact, password } = req.body;
+
+    let hashedPassword;
+    if (password) {
+      hashedPassword = await bcrypt.hash(password, 10);
+    }
+    const updatedTeacher = await updateTeacher(
+      id,
+      name,
+      email,
+      contact,
+      hashedPassword,
+    );
     res.status(200).json(updatedTeacher);
   } catch (error) {
     res.status(500).json({ error: error.message });

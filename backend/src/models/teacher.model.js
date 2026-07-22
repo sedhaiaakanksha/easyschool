@@ -17,10 +17,18 @@ export const createTeacher = async (id, name, email, contact, password) => {
 };
 
 export const updateTeacher = async (id, name, email, contact, password) => {
-  const result = await pool.query(
-    "UPDATE teachers SET name=$1, email=$2, contact=$3, password=$4 WHERE id= $5 RETURNING id, name, email, contact",
-    [name, email, contact, password, id],
-  );
+  let query;
+  let values;
+  if (password) {
+    query =
+      "UPDATE teachers SET name=$1, email=$2, contact=$3, password=$4 WHERE id= $5 RETURNING id, name, email, contact";
+    values = [name, email, contact, password, id];
+  } else {
+    query =
+      "UPDATE teachers SET name=$1, email=$2, contact=$3 WHERE id= $4 RETURNING id, name, email, contact";
+    values = [name, email, contact, id];
+  }
+  const result = await pool.query(query, values);
 
   return result.rows[0];
 };
