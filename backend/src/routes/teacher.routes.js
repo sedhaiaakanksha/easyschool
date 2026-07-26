@@ -6,6 +6,8 @@ import {
   addTeacher,
   editTeacher,
   removeTeacher,
+  registerTeacher,
+  loginTeacher,
 } from "../controllers/teacher.controller";
 
 const router = express.Router();
@@ -19,5 +21,8 @@ router.get(
 router.post("/", verifyToken, restrictTo("academy_admin"), addTeacher);
 router.put("/:id", verifyToken, restrictTo("academy_admin"), editTeacher);
 router.delete("/:id", verifyToken, restrictTo("academy_admin"), removeTeacher);
+
+router.post("/register", registerTeacher);
+router.post("/login", loginTeacher);
 
 export default router;
