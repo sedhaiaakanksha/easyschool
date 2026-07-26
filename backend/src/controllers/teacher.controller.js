@@ -19,17 +19,9 @@ export const listTeacher = async (req, res) => {
 
 export const addTeacher = async (req, res) => {
   try {
-    const { id, name, email, contact, password } = req.body;
+    const { id, name, email, contact } = req.body;
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newTeacher = await createTeacher(
-      id,
-      name,
-      email,
-      contact,
-      hashedPassword,
-    );
+    const newTeacher = await createTeacher(id, name, email, contact);
 
     res.status(201).json(newTeacher);
   } catch (error) {
