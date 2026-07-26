@@ -7,6 +7,13 @@ export const getAllTeachers = async () => {
   return result.rows;
 };
 
+export const getTeacherByEmail = async (email) => {
+  const result = await pool.query("SELECT * FROM teachers WHERE email = $1", [
+    email,
+  ]);
+  return result.rows[0];
+};
+
 export const createTeacher = async (id, name, email, contact) => {
   const result = await pool.query(
     "INSERT INTO teachers(id, name, email, contact) VALUES ($1, $2, $3, $4) RETURNING id, name, email, contact",
