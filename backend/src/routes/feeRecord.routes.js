@@ -7,9 +7,11 @@ import {
 
 import express from "express";
 
-const routes = express.Routes();
+const router = express.Router();
 
-routes.get("/", listFeeRecords);
-routes.post("/", createFeeRecords);
-routes.put("/:id", editFeeRecord);
-routes.delete("/:id", removeFeeRecord);
+router.get("/", listFeeRecords);
+router.post("/", createFeeRecords);
+router.put("/:id", editFeeRecord);
+router.delete("/:id", removeFeeRecord);
+
+export default router;

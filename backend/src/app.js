@@ -12,6 +12,7 @@ import schdeuleRoutes from "./routes/schedule.routes";
 import enrollmentRoutes from "./routes/enrollment.routes";
 import examResultRoutes from "./routes/examResult.routes";
 import teacherAttendanceRoutes from "./routes/teacherAttendance.routes";
+import adminRoutes from "./routes/admin.routes";
 
 const app = express();
 
@@ -33,5 +34,6 @@ app.use("/api/schedules", schdeuleRoutes);
 app.use("/api/enrollments", enrollmentRoutes);
 app.use("/api/examResults", examResultRoutes);
 app.use("/api/teacher-attendance", teacherAttendanceRoutes);
+app.use("/api/admins", adminRoutes);
 
 export default app;

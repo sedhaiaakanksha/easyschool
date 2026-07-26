@@ -37,7 +37,7 @@ for (const admin of admins) {
 
   await pool.query(
     "INSERT INTO admins (id, name, email, password, role) VALUES ($1, $2, $3, $4, $5)",
-    [admin.id, admin.name, admin.email, admin.password, admin.role],
+    [admin.id, admin.name, admin.email, hashedPassword, admin.role],
   );
 
   console.log(`Created ${admin.role}`);
