@@ -19,7 +19,7 @@ export const listTeacher = async (req, res) => {
   }
 };
 
-export const addTeacher = async (req, res) => {
+export const createTeacher = async (req, res) => {
   try {
     const { id, name, email, contact } = req.body;
 

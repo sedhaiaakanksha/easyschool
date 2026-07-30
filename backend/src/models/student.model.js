@@ -7,6 +7,13 @@ export const getAllStudents = async () => {
   return result.rows;
 };
 
+export const getStudentByEmail = async (email) => {
+  const result = await pool.query("SELECT * FROM students WHERE email =$1", [
+    email,
+  ]);
+  return result.rows[0];
+};
+
 export const addStudent = async (
   id,
   first_name,
@@ -18,10 +25,9 @@ export const addStudent = async (
   class_id,
   faculty_id,
   status,
-  password,
 ) => {
   const result = await pool.query(
-    "INSERT INTO students( id, first_name, last_name, email, contact, admission_number, admission_date, class_id, faculty_id, status, password) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10 , $11) RETURNING id, first_name, last_name, email, contact, admission_number, admission_date, class_id, faculty_id, status",
+    "INSERT INTO students( id, first_name, last_name, email, contact, admission_number, admission_date, class_id, faculty_id, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10 ) RETURNING id, first_name, last_name, email, contact, admission_number, admission_date, class_id, faculty_id, status",
     [
       id,
       first_name,
@@ -33,7 +39,6 @@ export const addStudent = async (
       class_id,
       faculty_id,
       status,
-      password,
     ],
   );
   return result.rows[0];

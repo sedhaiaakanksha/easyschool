@@ -14,7 +14,7 @@ export const getTeacherByEmail = async (email) => {
   return result.rows[0];
 };
 
-export const createTeacher = async (id, name, email, contact) => {
+export const addTeacher = async (id, name, email, contact) => {
   const result = await pool.query(
     "INSERT INTO teachers(id, name, email, contact) VALUES ($1, $2, $3, $4) RETURNING id, name, email, contact",
     [id, name, email, contact],
