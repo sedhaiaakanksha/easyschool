@@ -1,9 +1,23 @@
 import pool from "../utils/db";
+import { react } from "@vitejs/plugin-react";
 
 export const getAllAttendanceRecord = async () => {
   const result = await pool.query("SELECT * FROM attendance_records");
 
   return result.rows;
+};
+export const getAttendanceRecordByStudentId = async (studnetId) => {
+  const result = await pool.query(
+    "SELECT * from attendance_record WHERE student_id = $1",
+  );
+  return result.rows[0];
+};
+
+export const getAttendanceRecordById = async (id) => {
+  const result = await pool.query(
+    "SELECT * FROM attendance_record WHERE id =$1",
+  );
+  return result.rows[0];
 };
 
 export const addAttendanceRecord = async (id, student_id, date, status) => {

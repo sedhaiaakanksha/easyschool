@@ -1,14 +1,34 @@
 import {
   getAllFeeRecords,
+  getFeeRecordById,
   addFeeRecord,
   updateFeeRecord,
   deleteFeeRecord,
+  getFeeRecordByStudentId,
 } from "../models/feeRecords.model";
 
 export const listFeeRecords = async (req, res) => {
   try {
     const feeRecords = await getAllFeeRecords();
     res.status(200).json(feeRecords);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const listMyFeeRecord = async (req, res) => {
+  try {
+    const record = await getFeeRecordByStudentId(req.user.id);
+    res.status(200).jsom(record);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const listFeeRecordById = async (req, res) => {
+  try {
+    const feeRecord = await getFeeRecordById(id);
+    res.status(200).json(feeRecord);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

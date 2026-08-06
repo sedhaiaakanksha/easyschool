@@ -3,12 +3,32 @@ import {
   addExamResult,
   updateExamResult,
   deleteExamResult,
+  getExamResultByStudentId,
+  getExamResulById,
 } from "../models/examResult.model";
 
 export const listExamResults = async (req, res) => {
   try {
     const examResults = await getAllExamResults();
     res.status(200).json(examResults);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const listMyExamResult = async (req, res) => {
+  try {
+    const myResult = await getExamResultByStudentId(student_id);
+    res.status(200).json(myResult);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const listExamResultById = async (req, res) => {
+  try {
+    const examResultById = await getExamResulById(id);
+    res.status(200).json(examResultById);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

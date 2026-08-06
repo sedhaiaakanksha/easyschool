@@ -3,6 +3,8 @@ import {
   addAttendanceRecord,
   updateAttendanceRecord,
   deleteAttendanceRecord,
+  getAttendanceRecordByStudentId,
+  getAttendanceRecordById,
 } from "../models/attendanceRecords.model";
 
 export const listAttendanceRecords = async (req, res) => {
@@ -14,6 +16,23 @@ export const listAttendanceRecords = async (req, res) => {
   }
 };
 
+export const listMyAttendanceRecord = async (req, res) => {
+  try {
+    const myAttendanceRecord = await getAttendanceRecordByStudentId(student_id);
+    res.status(200).json(myAttendanceRecord);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const listAttendanceRecordById = async (res, req) => {
+  try {
+    const attendanceRecordById = await getAttendanceRecordById(id);
+    res.status(200).json(attendanceRecordById);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 export const createAttendanceRecord = async (req, res) => {
   try {
     const { id, student_id, date, status } = req.body;

@@ -5,6 +5,21 @@ export const getAllExamResults = async () => {
   return result.rows;
 };
 
+export const getExamResultByStudentId = async (studentId) => {
+  const result = await pool.query(
+    "SELECT * FROM exam_results WHERE student_id = $1",
+    [studentId],
+  );
+  return result.rows[0];
+};
+
+export const getExamResulById = async (id) => {
+  const result = await pool.query("SELECT * FROM exam_results WHERE id = $1", [
+    id,
+  ]);
+  return result.rows[0];
+};
+
 export const addExamResult = async (
   id,
   student_id,
