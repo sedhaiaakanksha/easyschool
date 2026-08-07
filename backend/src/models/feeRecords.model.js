@@ -10,7 +10,7 @@ export const getFeeRecordByStudentId = async (studentId) => {
     "SELECT * FROM fee_records WHERE student_id =$1",
     [studentId],
   );
-  return result.rows[0];
+  return result.rows;
 };
 
 export const getFeeRecordById = async (id) => {
@@ -44,7 +44,7 @@ export const updateFeeRecord = async (
   status,
 ) => {
   const result = await pool.query(
-    "UPDTE fee_records SET student_id = $1, amount_due= $2, amount_paid=$3, due_date=$4, status=$5 WHERE id= $6 RETURNING *",
+    "UPDATE fee_records SET student_id = $1, amount_due= $2, amount_paid=$3, due_date=$4, status=$5 WHERE id= $6 RETURNING *",
     [student_id, amount_due, amount_paid, due_date, status, id],
   );
   return result.rows[0];
