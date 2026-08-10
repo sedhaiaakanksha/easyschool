@@ -3,6 +3,7 @@ import {
   createSchdeules,
   editSchdule,
   removeSchedule,
+  getMySchedule,
 } from "../controllers/schedule.controller";
 import { verifyToken } from "../middleware/auth.middleware";
 import { restrictTo } from "../middleware/role.middleware";
@@ -11,6 +12,7 @@ import express from "express";
 
 const router = express.Router();
 
+router.get("/my-schedule", verifyToken, restrictTo("student"), getMySchedule);
 router.get(
   "/",
   verifyToken,

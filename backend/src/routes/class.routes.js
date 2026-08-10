@@ -3,6 +3,7 @@ import {
   createClass,
   editClass,
   removeClass,
+  getMyClass,
 } from "../controllers/class.controller";
 import { verifyToken } from "../middleware/auth.middleware";
 import { restrictTo } from "../middleware/role.middleware";
@@ -17,6 +18,8 @@ router.get(
   restrictTo("academy_admin", "ssd_admin", "rte_admin", "student"),
   listClass,
 );
+router.get("/my-class", verifyToken, restrictTo("student"), getMyClass);
+
 router.post("/", verifyToken, restrictTo("academy_admin"), createClass);
 router.put("/:id", verifyToken, restrictTo("academy_admin"), editClass);
 router.delete("/:id", verifyToken, restrictTo("academy_admin"), removeClass);

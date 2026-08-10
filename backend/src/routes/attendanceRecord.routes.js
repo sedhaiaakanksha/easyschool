@@ -14,18 +14,17 @@ import express from "express";
 const router = express.Router();
 
 router.get(
+  "/my-attendance",
+  verifyToken,
+  restrictTo("student"),
+  listMyAttendanceRecord,
+);
+router.get(
   "/",
   verifyToken,
   restrictTo("academy_admin", "ssd_admin"),
   listAttendanceRecords,
 );
-router.get(
-  "/my-attendance",
-  verifyToken,
-  restrictTo("studnet"),
-  listAttendanceRecords,
-);
-
 router.get(
   "/:id",
   verifyToken,
@@ -47,7 +46,7 @@ router.put(
 router.delete(
   "/:id",
   verifyToken,
-  restrictTo("academy_admun"),
+  restrictTo("academy_admin"),
   removeAttendanceRecord,
 );
 

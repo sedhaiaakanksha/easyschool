@@ -1,7 +1,7 @@
 import pool from "../utils/db";
 
 export const getAllSchedules = async () => {
-  const result = await pool.query("SELECT * FROM subjects");
+  const result = await pool.query("SELECT * FROM schedules");
   return result.rows;
 };
 
@@ -40,7 +40,24 @@ export const updateSchedule = async (
 };
 
 export const deleteSchedule = async (id) => {
-  const result = await pool.query("DELETE FROM schedules WHERE id=$1*", [id]);
+  const result = await pool.query("DELETE FROM schedules WHERE id=$1", [id]);
 
   return result.rows[0];
+};
+
+export const getScheduleOfStudent = async (studentId) => {
+  const result = await pool.query(
+    "SELECT class_id FROM students WHERE id =$1",
+    [studentId],
+  );
+
+  const classId = result.rows[0]?.class_id;
+
+  if (!classId) return null;
+
+  const scheduleResult = await pool.query(
+    "SELECT * FROM schedules WHERE class_id=$1",
+    [classId],
+  );
+  return scheduleResult.rows;
 };

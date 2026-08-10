@@ -3,6 +3,7 @@ import {
   addClass,
   updateClass,
   deleteClass,
+  getClassByStudentId,
 } from "../models/class.model";
 
 export const listClass = async (req, res) => {
@@ -55,6 +56,20 @@ export const removeClass = async (req, res) => {
     const deletedClass = await deleteClass(id);
 
     res.status(200).json(deletedClass);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getMyClass = async (req, res) => {
+  try {
+    const studentId = req.user.id;
+    const classByStudent = await getClassByStudentId(studentId);
+    if (!classByStudent) {
+      res.status(404).json({ error: "Class not found" });
+    }
+
+    res.status(200).json(classByStudent);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

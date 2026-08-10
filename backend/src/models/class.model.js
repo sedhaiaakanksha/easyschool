@@ -42,7 +42,7 @@ export const deleteClass = async (id) => {
 };
 
 export const getClassByStudentId = async (studentId) => {
-  const result = await pool.query("SELECT class_id FROM classes WHERE id=$1", [
+  const result = await pool.query("SELECT class_id FROM students WHERE id=$1", [
     studentId,
   ]);
   const classId = result.rows[0]?.class_id;

@@ -18,21 +18,29 @@ export const listAttendanceRecords = async (req, res) => {
 
 export const listMyAttendanceRecord = async (req, res) => {
   try {
-    const myAttendanceRecord = await getAttendanceRecordByStudentId(student_id);
+    const studentId = req.user.id;
+    const myAttendanceRecord = await getAttendanceRecordByStudentId(studentId);
     res.status(200).json(myAttendanceRecord);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-export const listAttendanceRecordById = async (res, req) => {
+export const listAttendanceRecordById = async (req, res) => {
   try {
+    const { id } = req.params;
     const attendanceRecordById = await getAttendanceRecordById(id);
+
+    if (!attendanceRecordById) {
+      return res.status(404).json({ error: "Attendance Record not found" });
+    }
+
     res.status(200).json(attendanceRecordById);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 export const createAttendanceRecord = async (req, res) => {
   try {
     const { id, student_id, date, status } = req.body;
@@ -71,7 +79,7 @@ export const removeAttendanceRecord = async (req, res) => {
     const { id } = req.params;
 
     const deletedAttendanceRecord = await deleteAttendanceRecord(id);
-    res.status(201).json(deletedAttendanceRecord);
+    res.status(200).json(deletedAttendanceRecord);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -3,6 +3,7 @@ import {
   addSchedule,
   updateSchedule,
   deleteSchedule,
+  getScheduleOfStudent,
 } from "../models/schedule.model";
 
 export const listSchdeule = async (req, res) => {
@@ -76,5 +77,20 @@ export const removeSchedule = async (req, res) => {
     res.status(200).json(deletedSchedule);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+export const getMySchedule = async (req, res) => {
+  try {
+    const studentId = req.user.id;
+
+    const mySchedule = await getScheduleOfStudent(studentId);
+    if (!mySchedule || mySchedule.length === 0) {
+      return res.status(404).json({ error: "Schedule not found" });
+    }
+
+    res.status(200).json(mySchedule);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
   }
 };
