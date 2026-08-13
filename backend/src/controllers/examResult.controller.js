@@ -18,7 +18,11 @@ export const listExamResults = async (req, res) => {
 
 export const listMyExamResult = async (req, res) => {
   try {
-    const myResult = await getExamResultByStudentId(student_id);
+    const studentId = req.user.id;
+    const myResult = await getExamResultByStudentId(studentId);
+    if (!myResult || myResult.length === 0) {
+      return res.status(404).json({ error: "Exam Result not found" });
+    }
     res.status(200).json(myResult);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -27,6 +31,7 @@ export const listMyExamResult = async (req, res) => {
 
 export const listExamResultById = async (req, res) => {
   try {
+    const { id } = req.params;
     const examResultById = await getExamResulById(id);
     res.status(200).json(examResultById);
   } catch (error) {

@@ -1,5 +1,6 @@
 import {
-  getAllSuject,
+  getAllSujects,
+  getSubjectByStudentId,
   addSubjects,
   updateSubject,
   deleteSubject,
@@ -7,8 +8,23 @@ import {
 
 export const listSubjects = async (req, res) => {
   try {
-    const subjects = await getAllSuject();
-    res.staus(200).json(subjects);
+    const subjects = await getAllSujects();
+    res.status(200).json(subjects);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const listSubjectByStudent = async (req, res) => {
+  try {
+    const studentId = req.user.id;
+
+    const subjectsOfStudent = await getSubjectByStudentId(studentId);
+
+    if (!subjectsOfStudent || subjectsOfStudent.length === 0) {
+      return res.status(404).json({ error: "Subject not found" });
+    }
+    res.status(200).json(subjectsOfStudent);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -16,7 +32,7 @@ export const listSubjects = async (req, res) => {
 
 export const createSubject = async (req, res) => {
   try {
-    const { id, name, code, password } = req.body;
+    const { id, name, code } = req.body;
 
     const newSubject = await addSubjects(id, name, code);
     res.status(201).json(newSubject);
