@@ -5,6 +5,14 @@ export const getAllTeacherAttendance = async () => {
   return result.rows;
 };
 
+export const getTeacherAttendanceById = async (id) => {
+  const result = await pool.query(
+    "SELECT * FROM teacher_attendance WHERE id = $1",
+    [id],
+  );
+  return result.rows[0];
+};
+
 export const addTeacherAttendance = async (id, teacher_id, date, status) => {
   const result = await pool.query(
     "INSERT INTO teacher_attendance (id, teacher_id, date, status) VALUES ($1, $2, $3, $4) RETURNING *",
