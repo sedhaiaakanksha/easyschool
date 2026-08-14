@@ -5,6 +5,14 @@ export const getAllTeacherAttendance = async () => {
   return result.rows;
 };
 
+export const getTeacherAttendanceByTeacherId = async (TeacherId) => {
+  const result = await pool.query(
+    "SELECT * FROM teacher_attendance WHERE teacher_id = $1",
+    [TeacherId],
+  );
+  return result.rows;
+};
+
 export const getTeacherAttendanceById = async (id) => {
   const result = await pool.query(
     "SELECT * FROM teacher_attendance WHERE id = $1",

@@ -2,6 +2,8 @@ import express from "express";
 import {
   listTeacherAttendance,
   createTeacherAttendance,
+  listTeacherAttendanceById,
+  listTeacherAttendanceByTeacherId,
   editTeacherAttendance,
   removeTeacherAttendance,
 } from "../controllers/teacherAttendance.controller";
@@ -11,6 +13,18 @@ import { restrictTo } from "../middleware/role.middleware";
 
 const router = express.Router();
 
+router.get(
+  "/my-attendance",
+  verifyToken,
+  restrictTo("teacher"),
+  listTeacherAttendanceByTeacherId,
+);
+router.get(
+  "/:id",
+  verifyToken,
+  restrictTo("rte_admin", "academy_admin"),
+  listTeacherAttendanceById,
+);
 router.get(
   "/",
   verifyToken,

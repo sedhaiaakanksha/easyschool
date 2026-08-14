@@ -1,5 +1,7 @@
 import {
   getAllTeacherAttendance,
+  getTeacherAttendanceByTeacherId,
+  getTeacherAttendanceById,
   addTeacherAttendance,
   updateTeacherAttendance,
   deleteTeacherAttendance,
@@ -14,6 +16,31 @@ export const listTeacherAttendance = async (req, res) => {
   }
 };
 
+export const listTeacherAttendanceByTeacherId = async (req, res) => {
+  try {
+    const TeacherId = req.user.id;
+    const teacherAttendance = await getTeacherAttendanceByTeacherId(TeacherId);
+    if (!teacherAttendance || teacherAttendance.length === 0) {
+      return res.status(404).json({ error: "Teacher Attendance not found" });
+    }
+    res.status(200).json(teacherAttendance);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const listTeacherAttendanceById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const teacherAttendanceById = await getTeacherAttendanceById(id);
+    if (!teacherAttendanceById) {
+      return res.status(404).json({ error: "Attendance not found" });
+    }
+    res.status(200).json(teacherAttendanceById);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 export const createTeacherAttendance = async (req, res) => {
   try {
     const { id, teacher_id, date, status } = req.body;

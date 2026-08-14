@@ -20,17 +20,18 @@ router.get(
   listMyAttendanceRecord,
 );
 router.get(
-  "/",
-  verifyToken,
-  restrictTo("academy_admin", "ssd_admin"),
-  listAttendanceRecords,
-);
-router.get(
   "/:id",
   verifyToken,
   restrictTo("ssd_admin", "academy_admin"),
   listAttendanceRecordById,
 );
+router.get(
+  "/",
+  verifyToken,
+  restrictTo("academy_admin", "ssd_admin"),
+  listAttendanceRecords,
+);
+
 router.post(
   "/",
   verifyToken,
