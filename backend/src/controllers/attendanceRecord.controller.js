@@ -20,6 +20,9 @@ export const listMyAttendanceRecord = async (req, res) => {
   try {
     const studentId = req.user.id;
     const myAttendanceRecord = await getAttendanceRecordByStudentId(studentId);
+    if (!myAttendanceRecord || myAttendanceRecord.length === 0) {
+      return res.status(404).json({ error: "Attendance Record not found" });
+    }
     res.status(200).json(myAttendanceRecord);
   } catch (error) {
     res.status(500).json({ error: error.message });

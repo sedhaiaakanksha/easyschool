@@ -1,18 +1,18 @@
 import pool from "../utils/db";
 
-export const getAllSubject = async () => {
+export const getAllSubjects = async () => {
   const result = await pool.query("SELECT * FROM subjects");
   return result.rows;
 };
 
 export const getSubjectByStudentId = async (studentId) => {
-  const studentId = req.user.id;
   const result = await pool.query(
     `SELECT * FROM subjects WHERE id IN (SELECT subject_id FROM enrollments WHERE studet_id =$1)`,
     [studentId],
   );
   return result.rows;
 };
+
 export const addSubjects = async (id, name, code) => {
   const result = await pool.query(
     "INSERT INTO subjects (id, name, code) VALUES($1, $2, $3) RETURNING * ",

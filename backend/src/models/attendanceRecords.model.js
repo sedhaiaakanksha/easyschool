@@ -5,10 +5,10 @@ export const getAllAttendanceRecord = async () => {
 
   return result.rows;
 };
-export const getAttendanceRecordByStudentId = async (studnetId) => {
+export const getAttendanceRecordByStudentId = async (studentId) => {
   const result = await pool.query(
     "SELECT * from attendance_records WHERE student_id = $1",
-    [studnetId],
+    [studentId],
   );
   return result.rows;
 };

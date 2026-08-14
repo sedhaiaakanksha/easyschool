@@ -1,5 +1,5 @@
 import {
-  getAllSujects,
+  getAllSubjects,
   getSubjectByStudentId,
   addSubjects,
   updateSubject,
@@ -8,7 +8,7 @@ import {
 
 export const listSubjects = async (req, res) => {
   try {
-    const subjects = await getAllSujects();
+    const subjects = await getAllSubjects();
     res.status(200).json(subjects);
   } catch (error) {
     res.status(500).json({ error: error.message });

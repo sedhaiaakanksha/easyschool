@@ -1,7 +1,7 @@
 import {
   getAllTeachers,
   getTeacherByEmail,
-  createTeacher,
+  addTeacher,
   updateTeacher,
   deleteTeacher,
 } from "../models/teacher.model";
@@ -23,7 +23,7 @@ export const createTeacher = async (req, res) => {
   try {
     const { id, name, email, contact } = req.body;
 
-    const newTeacher = await createTeacher(id, name, email, contact);
+    const newTeacher = await addTeacher(id, name, email, contact);
 
     res.status(201).json(newTeacher);
   } catch (error) {
