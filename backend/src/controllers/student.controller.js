@@ -105,6 +105,7 @@ export const removeStudent = async (req, res) => {
 export const registerStudent = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const profilePicturePath = req.file ? req.file.path : null;
 
     const student = await getStudentByEmail(email);
 
@@ -134,6 +135,7 @@ export const registerStudent = async (req, res) => {
       student.faculty_id,
       student.status,
       hashedPassword,
+      profilePicturePath,
     );
 
     res
