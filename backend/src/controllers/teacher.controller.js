@@ -35,6 +35,7 @@ export const editTeacher = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, email, contact, password } = req.body;
+    const profilePicturePath = req.file ? req.file.path : undefined;
 
     let hashedPassword;
     if (password) {
@@ -46,6 +47,7 @@ export const editTeacher = async (req, res) => {
       email,
       contact,
       hashedPassword,
+      profilePicturePath,
     );
     res.status(200).json(updatedTeacher);
   } catch (error) {
@@ -66,6 +68,7 @@ export const removeTeacher = async (req, res) => {
 export const registerTeacher = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const profilePicturePath = req.file ? req.file.path : null;
 
     const teacher = await getTeacherByEmail(email);
 
@@ -89,6 +92,7 @@ export const registerTeacher = async (req, res) => {
       teacher.email,
       teacher.contact,
       hashedPassword,
+      profilePicturePath,
     );
 
     res

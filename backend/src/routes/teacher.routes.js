@@ -9,6 +9,7 @@ import {
   registerTeacher,
   loginTeacher,
 } from "../controllers/teacher.controller";
+import { upload } from "../middleware/upload.middleware";
 
 const router = express.Router();
 
@@ -22,7 +23,7 @@ router.post("/", verifyToken, restrictTo("academy_admin"), createTeacher);
 router.put("/:id", verifyToken, restrictTo("academy_admin"), editTeacher);
 router.delete("/:id", verifyToken, restrictTo("academy_admin"), removeTeacher);
 
-router.post("/register", registerTeacher);
+router.post("/register", upload.single("profile_picture"), registerTeacher);
 router.post("/login", loginTeacher);
 
 export default router;

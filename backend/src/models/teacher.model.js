@@ -2,7 +2,7 @@ import pool from "../utils/db";
 
 export const getAllTeachers = async () => {
   const result = await pool.query(
-    "SELECT id, name, email, contact FROM teachers",
+    "SELECT id, name, email, contact, profile_picture FROM teachers",
   );
   return result.rows;
 };
@@ -23,13 +23,27 @@ export const addTeacher = async (id, name, email, contact) => {
   return result.rows[0];
 };
 
-export const updateTeacher = async (id, name, email, contact, password) => {
+export const updateTeacher = async (
+  id,
+  name,
+  email,
+  contact,
+  password,
+  profile_picture,
+) => {
   let query;
   let values;
-  if (password) {
+  if (password && profile_picture) {
+    query =
+      "UPDATE teachers SET name=$1, email=$2, contact=$3, password=$4, profile_picture=$5 WHERE id= $6 RETURNING id, name, email, contact, profile_picture";
+    values = [name, email, contact, password, profile_picture, id];
+  } else if (password) {
     query =
       "UPDATE teachers SET name=$1, email=$2, contact=$3, password=$4 WHERE id= $5 RETURNING id, name, email, contact";
     values = [name, email, contact, password, id];
+  } else if (profile_picture) {
+    query = `UPDATE teachers SET name=$1, email=$2, contact=$3, profile_picture=$4 WHERE id=$5 RETURNING id, name, email, contact, profile_picture`;
+    values = [name, email, contact, profile_picture, id];
   } else {
     query =
       "UPDATE teachers SET name=$1, email=$2, contact=$3 WHERE id= $4 RETURNING id, name, email, contact";

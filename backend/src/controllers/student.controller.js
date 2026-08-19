@@ -68,6 +68,7 @@ export const editStudent = async (req, res) => {
       status,
       password,
     } = req.body;
+    const profilePicturePath = req.file ? req.file.path : undefined;
     let hashedPassword;
     if (password) {
       hashedPassword = await bcrypt.hash(password, 10);
@@ -84,6 +85,7 @@ export const editStudent = async (req, res) => {
       faculty_id,
       status,
       hashedPassword,
+      profilePicturePath,
     );
 
     res.status(200).json(updatedStudent);
