@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { apiCall } from "../../utils/api";
+import AuthForm from "../../components/AuthForm";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -45,7 +46,7 @@ const Register = () => {
     } finally {
       setLoading(false);
     }
-    return <div>Register</div>;
+    return <AuthForm />;
   };
 };
 

@@ -8,6 +8,7 @@ export default function AuthForm({
   setEmail,
   password,
   confirmPassword,
+  setConfirmPassword,
   setPassword,
   onSubmit,
   loading,
@@ -23,6 +24,11 @@ export default function AuthForm({
   //   const [success, setSuccess] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
+
+  const checkingError = () => {
+    if (!email) {
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -50,11 +56,7 @@ export default function AuthForm({
           <h2 className="text-center text-3xl font-extrabold text-gray-900">
             {heading}
           </h2>
-          {error && (
-            <div className="rounded-md bg-red-50 p-4 text-sm text-red-700">
-              {error}
-            </div>
-          )}
+
           <form className="mt-8 space-y-6" onSubmit={onSubmit}>
             <div className="">
               <div>
@@ -64,8 +66,9 @@ export default function AuthForm({
                 <input
                   type="email"
                   value={email}
+                  required
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-yellow-400 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div>
@@ -76,8 +79,9 @@ export default function AuthForm({
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
+                    required
                     onChange={(e) => setPassword(e.target.value)}
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm-text-sm"
+                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-yellow-400 focus:outline-none focus:ring-yekkow-200 sm-text-sm"
                   />
                   <button
                     type="button"
@@ -101,18 +105,48 @@ export default function AuthForm({
                     value={confirmPassword}
                     required
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="mt-1 block  w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ouline-none focus-ring-indigo-500 sm-text-sm"
+                    className="mt-1 block  w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-yellow-400 focus:ouline-none focus-ring-indigo-500 sm-text-sm"
                   />
                 </div>
               )}
             </div>
+
+            <div>
+              <button
+                type="submit"
+                disabled={loading}
+                className="group relative flex w-full justify-center rounded-md border border-transparent bg-yellow-200 px-4 py-2 text-m font-medium text-blue-800 hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-offset-2 disabled:bg-yellow-100"
+              >
+                {loading ? "Please wait...." : title}
+              </button>
+            </div>
+            {error && (
+              <div className="rounded-md p-2 text-sm text-red-700 mt-0.5">
+                {error}
+              </div>
+            )}
+            {isRegister && (
+              <div>
+                <label className=" block text-sm font-medium text-gray-700">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+            )}
+
             <div>
               <button
                 type="submit"
                 disabled={loading}
                 className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:bg-indigo-300"
               >
-                {loading ? "Please wait...." : title}
+                {loading ? "Please wait ...." : title}
               </button>
             </div>
           </form>
