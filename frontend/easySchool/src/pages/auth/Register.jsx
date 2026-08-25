@@ -46,8 +46,23 @@ const Register = () => {
     } finally {
       setLoading(false);
     }
-    return <AuthForm />;
   };
+  return (
+    <AuthForm
+      heading="Welcome Back"
+      title="Login"
+      email={email}
+      setEmail={setEmail}
+      password={password}
+      setPassword={setPassword}
+      confirmPassword={confirmPassword}
+      setConfirmPassword={setConfirmPassword}
+      onSubmit={handleSubmit}
+      loading={loading}
+      error={error}
+      isRegister={true}
+    />
+  );
 };
 
 export default Register;

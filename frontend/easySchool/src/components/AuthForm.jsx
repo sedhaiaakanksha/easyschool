@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import logo from "../assets/logo.png";
-import { FiEye, FiEyeOff } from "react-icons/fi";
+import { useNavigate, Link } from "react-router-dom";
+import { Upload } from "lucide-react";
+import { FiEye, FiMail, FiLock, FiEyeOff, FiUser } from "react-icons/fi";
+
 export default function AuthForm({
   heading,
   title,
@@ -56,23 +59,47 @@ export default function AuthForm({
           <h2 className="text-center text-3xl font-extrabold text-gray-900">
             {heading}
           </h2>
-
+          {!isRegister && (
+            <div className="flex justify-center">
+              <p className="text-black font-sans  ">
+                Please enter your credentials to access your
+                <span className="flex justify-center font-sans">dashboard</span>
+              </p>
+            </div>
+          )}
+          {isRegister && (
+            <div className="">
+              <div className="flex justify-center items-center relative">
+                <FiUser size={40} />
+                <button
+                  type="submit"
+                  className="absolute mt-5 ml-10 text-yellow-500"
+                >
+                  <Upload size={20} />
+                </button>
+              </div>
+            </div>
+          )}
           <form className="mt-8 space-y-6" onSubmit={onSubmit}>
             <div className="">
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Email
                 </label>
-                <input
-                  type="email"
-                  value={email}
-                  required
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-yellow-400 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <div className="relative mt-1">
+                  <input
+                    type="email"
+                    value={email}
+                    required
+                    placeholder="john@easySchool.com"
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="mt-1 block w-full rounded-md border border-gray-300 pl-10 px-3 py-2 shadow-sm focus:border-yellow-400 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  />
+                  <div className="absolute inset-y-0  left-3 flex items-center pr-8 text-gray-500 hover:text-gray-700 focus:outline-none">
+                    <FiMail size={20} />
+                  </div>
+                </div>
+                <label className="block text-sm font-medium text-gray-700 pt-4">
                   Password
                 </label>
                 <div className="relative mt-1">
@@ -80,9 +107,13 @@ export default function AuthForm({
                     type={showPassword ? "text" : "password"}
                     value={password}
                     required
+                    placeholder="password"
                     onChange={(e) => setPassword(e.target.value)}
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-yellow-400 focus:outline-none focus:ring-yekkow-200 sm-text-sm"
+                    className="mt-1 block w-full rounded-md border pl-10 border-gray-300 px-3 py-2 shadow-sm focus:border-yellow-400 focus:outline-none focus:ring-yekkow-200 sm-text-sm"
                   />
+                  <div className="absolute left-3 inset-y-2 flex items-center pr-8 text-gray-500 hover:text-gray-700 focus:outline-none ">
+                    <FiLock size={20} />
+                  </div>
                   <button
                     type="button"
                     onClick={togglePasswordVisibility}
@@ -96,59 +127,62 @@ export default function AuthForm({
                   </button>
                 </div>
               </div>
-
-              {isRegister && (
-                <div>
-                  <label className="">Confirm Password</label>
-                  <input
-                    type="password"
-                    value={confirmPassword}
-                    required
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="mt-1 block  w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-yellow-400 focus:ouline-none focus-ring-indigo-500 sm-text-sm"
-                  />
-                </div>
-              )}
             </div>
 
-            <div>
-              <button
-                type="submit"
-                disabled={loading}
-                className="group relative flex w-full justify-center rounded-md border border-transparent bg-yellow-200 px-4 py-2 text-m font-medium text-blue-800 hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-offset-2 disabled:bg-yellow-100"
-              >
-                {loading ? "Please wait...." : title}
-              </button>
-            </div>
+            {!isRegister && (
+              <div>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="group relative flex w-full justify-center rounded-md border border-transparent bg-yellow-200 px-4 py-2 text-m font-medium text-blue-800 hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-offset-2 disabled:bg-yellow-100"
+                >
+                  {loading ? "Please wait...." : title}
+                </button>
+              </div>
+            )}
             {error && (
               <div className="rounded-md p-2 text-sm text-red-700 mt-0.5">
                 {error}
               </div>
             )}
-            {isRegister && (
-              <div>
-                <label className=" block text-sm font-medium text-gray-700">
-                  Confirm Password
-                </label>
-                <input
-                  type="password"
-                  required
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                />
+            {!isRegister && (
+              <div className="flex items-center justify-center">
+                <p className="text-sm font-sans">
+                  Don't have account?{" "}
+                  <Link
+                    to="/register"
+                    className="text-sm text-blue-600 underline"
+                  >
+                    Sign Up
+                  </Link>
+                </p>
               </div>
             )}
-
-            <div>
-              <button
-                type="submit"
-                disabled={loading}
-                className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:bg-indigo-300"
-              >
-                {loading ? "Please wait ...." : title}
-              </button>
-            </div>
+            {isRegister && (
+              <>
+                <div>
+                  <label className=" block text-sm font-medium text-gray-700 ">
+                    Confirm Password
+                  </label>
+                  <input
+                    type="password"
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  />
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:bg-indigo-300"
+                  >
+                    {loading ? "Please wait...." : title}
+                  </button>
+                </div>
+              </>
+            )}
           </form>
         </div>
       </div>
