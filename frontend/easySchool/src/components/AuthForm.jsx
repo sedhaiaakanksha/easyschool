@@ -16,6 +16,8 @@ export default function AuthForm({
   onSubmit,
   loading,
   error,
+  file,
+  onFileChange,
   isRegister = false,
 }) {
   //   const [email, setEmail] = useState("");
@@ -68,15 +70,35 @@ export default function AuthForm({
             </div>
           )}
           {isRegister && (
-            <div className="">
-              <div className="flex justify-center items-center relative">
-                <FiUser size={40} />
-                <button
-                  type="submit"
-                  className="absolute mt-5 ml-10 text-yellow-500"
+            <div className="flex justify-center items-center">
+              <div className="relative inline-block">
+                <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 overflow-hidden border-2 border-yellow-400 shadow-sm">
+                  {file ? (
+                    //show preview if the file is selcted
+                    <img
+                      src={file}
+                      alt="Profile Preview"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <FiUser size={40} />
+                  )}
+                </div>
+
+                <label
+                  htmlFor="profile-upload"
+                  className="absolute bottom-0 right-0 bg-yellow-400 p-1.5 rounded-full text-white cursor-pointer hover:bg-yellow-500 shadow-sm"
+                  title="Upload Profile Picture"
                 >
-                  <Upload size={20} />
-                </button>
+                  <Upload size={14} />
+                </label>
+                <input
+                  id="profile-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={onFileChange}
+                  className="hidden"
+                />
               </div>
             </div>
           )}

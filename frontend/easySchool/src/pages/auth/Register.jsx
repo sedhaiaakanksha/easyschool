@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { apiCall } from "../../utils/api";
 import AuthForm from "../../components/AuthForm";
 
@@ -6,11 +6,26 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [file, setFile] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
+  const [file, setFile] = useState(() => {
+    return sessionStorage.getItem("temp_profile_pic") || null;
+  });
 
+  const handleFileChange = async (event) => {
+    // event.preventDefault();
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result;
+        setFile(base64String);
+        sessionStorage.setItem("temp_profile_pic", base64String);
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
@@ -28,7 +43,11 @@ const Register = () => {
       formData.append("password", password);
 
       if (file) {
-        formData.append("profile_picture", file);
+        const res = await fetch(file);
+        const blob = await res.blob();
+
+        const imageFile = new File([blob], "profile.jpg", { type: blob.type });
+        formData.append("profile_picture", imageFile);
       }
 
       const data = await apiCall("/students/register", {
@@ -41,6 +60,7 @@ const Register = () => {
       setPassword("");
       setEmail("");
       setFile(null);
+      sessionStorage.removeItem("temp_profile_pic");
     } catch (error) {
       setError(error.message);
     } finally {
@@ -49,8 +69,8 @@ const Register = () => {
   };
   return (
     <AuthForm
-      heading="Welcome Back"
-      title="Login"
+      heading="Welcome"
+      title="Register"
       email={email}
       setEmail={setEmail}
       password={password}
@@ -58,6 +78,8 @@ const Register = () => {
       confirmPassword={confirmPassword}
       setConfirmPassword={setConfirmPassword}
       onSubmit={handleSubmit}
+      onFileChange={handleFileChange}
+      file={file}
       loading={loading}
       error={error}
       isRegister={true}
