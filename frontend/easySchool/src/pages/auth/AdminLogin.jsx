@@ -3,7 +3,7 @@ import { apiCall } from "../../utils/api";
 import AuthForm from "../../components/AuthForm";
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -17,7 +17,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const data = await apiCall("/students/login", {
+      const data = await apiCall("/admin/login", {
         method: "POST",
         body: { email, password },
       });
@@ -25,9 +25,9 @@ export default function Login() {
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", data.role);
 
-      alert("Login Sucessfull");
+      alert("Login Sucessful");
 
-      //To do redirect the user to dashboard according to their role
+      navigate("/admin/dashboard");
     } catch (error) {
       setError(error.message);
     } finally {
@@ -36,7 +36,7 @@ export default function Login() {
   };
   return (
     <AuthForm
-      heading="Welcome Back"
+      heading="Welcome to Admin Portal"
       title="Login"
       email={email}
       setEmail={setEmail}
@@ -46,6 +46,9 @@ export default function Login() {
       loading={loading}
       error={error}
       isRegister={false}
+      isAdmin={true}
     />
   );
-}
+};
+
+export default AdminLogin;

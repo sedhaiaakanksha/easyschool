@@ -7,6 +7,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import AdminLogin from "./pages/auth/AdminLogin";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         {/*Auth Route */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
       </Routes>
     </Router>
   );

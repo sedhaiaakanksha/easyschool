@@ -19,6 +19,7 @@ export default function AuthForm({
   file,
   onFileChange,
   isRegister = false,
+  isAdmin = false,
 }) {
   //   const [email, setEmail] = useState("");
   //   const [password, setPassword] = useState("");
@@ -167,7 +168,7 @@ export default function AuthForm({
                 {error}
               </div>
             )}
-            {!isRegister && (
+            {!isRegister && !isAdmin && (
               <div className="flex items-center justify-center">
                 <p className="text-sm font-sans">
                   Don't have account?{" "}
